@@ -63,7 +63,7 @@ const directionalLight = new THREE.DirectionalLight(0xffffff, 1.1);
 scene.add(directionalLight);
 
 
-const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1);
+const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1.2);
 scene.add(hemiLight);
 
 // --------------------------------------------------------------------------------
