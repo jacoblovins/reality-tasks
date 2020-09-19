@@ -63,7 +63,7 @@ const directionalLight = new THREE.DirectionalLight(0xffffff, 1.1);
 scene.add(directionalLight);
 
 
-const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1);
+const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1.2);
 scene.add(hemiLight);
 
 // --------------------------------------------------------------------------------
@@ -218,6 +218,15 @@ domEvents.addEventListener(homeMesh, "click", () => {
 
 const animate = function () {
   requestAnimationFrame(animate);
+  if(camera.position.x < -8){
+    camera.position.x = -8;
+  } else if(camera.position.x > 15.5){
+    camera.position.x = 15.5;
+  } else if(camera.position.z > 11){
+    camera.position.z = 11;
+  }else if(camera.position.z < -30){
+    camera.position.z = -30;
+  }
   render();
   stats.update();
 };
