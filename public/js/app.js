@@ -218,6 +218,15 @@ document.body.appendChild(stats.dom);
 
 const animate = function () {
   requestAnimationFrame(animate);
+  if(camera.position.x < -8){
+    camera.position.x = -8;
+  } else if(camera.position.x > 15.5){
+    camera.position.x = 15.5;
+  } else if(camera.position.z > 11){
+    camera.position.z = 11;
+  }else if(camera.position.z < -30){
+    camera.position.z = -30;
+  }
   render();
   stats.update();
 };
