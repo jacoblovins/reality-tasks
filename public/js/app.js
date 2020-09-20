@@ -188,34 +188,25 @@ function startTown() {
     console.log("you clicked on the mesh");
     document.body.innerHTML = "";
     startSchoolRoom();
-    // camera.position.x = -10.5;
-    // camera.position.z = -2.5;
-    // camera.rotation.y = 90 * Math.PI / 180;
   }, false);
 
   domEvents.addEventListener(officeMesh, "click", () => {
     console.log("you clicked on the mesh");
     document.body.innerHTML = "";
     startOfficeRoom();
-    // camera.position.x = 21;
-    // camera.position.z = -19;
+
   }, false);
 
   domEvents.addEventListener(storeMesh, "click", () => {
     console.log("you clicked on the mesh");
     document.body.innerHTML = "";
     startStoreRoom();
-    // camera.position.x = -11.5;
-    // camera.position.z = -2.5;
   }, false);
 
   domEvents.addEventListener(homeMesh, "click", () => {
     console.log("you clicked on the mesh");
     document.body.innerHTML = "";
     startHomeRoom();
-    // camera.position.x = 23.5;
-    // camera.position.z = 3.5;
-    // camera.rotation.y = 180 * Math.PI / 180;
   }, false);
 
   // --------------------------------------------------------------------------------
@@ -231,25 +222,19 @@ function startTown() {
 
   const render = function () {
     requestAnimationFrame(render);
-    // if (camera.position.x < -8) {
-    //   camera.position.x = -8;
-    // } else if (camera.position.x > 15.5) {
-    //   camera.position.x = 15.5;
-    // } else if (camera.position.z > 11) {
-    //   camera.position.z = 11;
-    // } else if (camera.position.z < -30) {
-    //   camera.position.z = -30;
-    // }
+    if (camera.position.x < -8) {
+      camera.position.x = -8;
+    } else if (camera.position.x > 15.5) {
+      camera.position.x = 15.5;
+    } else if (camera.position.z > 11) {
+      camera.position.z = 11;
+    } else if (camera.position.z < -30) {
+      camera.position.z = -30;
+    }
     controls.update(clock.getDelta());
     renderer.render(scene, camera);
-    // render();
     stats.update();
   };
-
-  // function render() {
-  //   controls.update(clock.getDelta());
-  //   renderer.render(scene, camera);
-  // }
 
   render();
 }
