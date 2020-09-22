@@ -194,7 +194,6 @@ function startTown() {
     console.log("you clicked on the mesh");
     document.body.innerHTML = "";
     startOfficeRoom();
-
   }, false);
 
   domEvents.addEventListener(storeMesh, "click", () => {

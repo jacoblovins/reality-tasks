@@ -3,6 +3,7 @@ import * as THREE from "/build/three.module.js";
 import { FirstPersonControls } from "/jsm/controls/FirstPersonControls.js";
 import { GLTFLoader } from "/jsm/loaders/GLTFLoader.js";
 import startTown from "./app.js";
+import { CSS3DRenderer, CSS3DObject } from "/jsm/renderers/CSS3DRenderer.js";
 
 
 
@@ -15,21 +16,31 @@ function startStoreRoom() {
   camera.position.y = 1.7;
   camera.position.x = 1;
 
-  const renderer = new THREE.WebGLRenderer();
+  const renderer = new THREE.WebGLRenderer({ alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.domElement.style.position = "absolute";
+  renderer.domElement.style.top = 0;
+  // renderer.domElement.style.zIndex = "1";
+  // renderer.domElement.style.pointerEvents = "none";
   document.body.appendChild(renderer.domElement);
 
-  const domEvents	= new THREEx.DomEvents(camera, renderer.domElement);
+  const renderer2 = new CSS3DRenderer();
+  renderer2.setSize(window.innerWidth, window.innerHeight);
+  renderer2.domElement.style.position = "absolute";
+  renderer2.domElement.style.top = 0;
+  document.body.appendChild(renderer2.domElement);
+
+  const domEvents2	= new THREEx.DomEvents(camera, renderer2.domElement);
 
 
-  const controls = new FirstPersonControls( camera, renderer.domElement );
+  const controls = new FirstPersonControls( camera, renderer2.domElement );
   controls.movementSpeed = 5;
   controls.lookSpeed = 0.08;
   controls.lookVertical = false;
 
   const loader = new GLTFLoader();
   loader.load(
-    "../img/storeRoom.glb",
+    "../img/storeRoom2.glb",
     (gltf) => {
     // called when the resource is loaded
       townScene.add(gltf.scene);
@@ -51,14 +62,64 @@ function startStoreRoom() {
   const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1.2);
   townScene.add(hemiLight);
 
-  const homeMaterial = new THREE.MeshBasicMaterial({ wireframe: false });
+  const homeMaterial = new THREE.MeshBasicMaterial({ wireframe: true });
   const homeGeometry = new THREE.PlaneGeometry(2.3, 2.5, 1);
   const homeMesh = new THREE.Mesh(homeGeometry, homeMaterial);
   homeMesh.rotation.y = 90 * Math.PI / 90;
   homeMesh.position.set(1.3, 1.1, 6.85);
   townScene.add(homeMesh);
 
-  domEvents.addEventListener(homeMesh, "click", () => {
+  // --------------------------------------------------------------------------------
+  // Add a todo element
+  // --------------------------------------------------------------------------------
+
+  const officeMaterial = new THREE.MeshBasicMaterial({ wireframe: false });
+  const officeGeometry = new THREE.PlaneGeometry(5, 2.5, 1);
+  const officeMesh = new THREE.Mesh(officeGeometry, officeMaterial);
+  // officeMesh.rotation.y = Math.PI / -2;
+  // officeMesh.rotation.y = 180 * Math.PI / 180;
+  officeMesh.position.set(1.4, 1.6, -0.85);
+  // z=6.3
+  townScene.add(officeMesh);
+
+  const moveMaterial = new THREE.MeshBasicMaterial({ wireframe: false });
+  const moveGeometry = new THREE.PlaneGeometry(9, 4, 1);
+  const moveMesh = new THREE.Mesh(moveGeometry, moveMaterial);
+  // moveMesh.rotation.y = Math.PI / -2;
+  // moveMesh.rotation.y = 180 * Math.PI / 180;
+  moveMesh.position.set(0, 1.7, -.9);
+  // z=6.3
+  townScene.add(moveMesh);
+
+
+  const element = document.createElement("div");
+  const iframe = document.createElement("iframe");
+  iframe.src = "../schoolTodo.html";
+  iframe.style.width = "400px";
+  iframe.style.height = "160px";
+  element.appendChild(iframe);
+  // element.style.width = "400px";
+  // element.style.height = "200px";
+
+  const domObject = new CSS3DObject(element);
+  domObject.scale.set(.009, .009, .009);
+  officeMesh.add(domObject);
+
+  domEvents2.addEventListener(officeMesh, "mouseover", () => {
+    controls.enabled = false;
+  }, false);
+  
+  domEvents2.addEventListener(moveMesh, "mouseover", () => {
+    controls.enabled = true;
+  }, false);
+
+
+  // --------------------------------------------------------------------------------
+  // Door click
+  // --------------------------------------------------------------------------------
+
+
+  domEvents2.addEventListener(homeMesh, "click", () => {
     console.log("you clicked on the mesh");
     document.body.innerHTML = "";
     startTown();
@@ -91,6 +152,7 @@ function startStoreRoom() {
   function render() {
     controls.update( clock.getDelta() );
     renderer.render(townScene, camera);
+    renderer2.render(townScene, camera);
   }
 
 }
