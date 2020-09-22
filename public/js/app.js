@@ -3,10 +3,11 @@ import * as THREE from "/build/three.module.js";
 import { FirstPersonControls } from "/jsm/controls/FirstPersonControls.js";
 import Stats from "/jsm/libs/stats.module.js";
 import { GLTFLoader } from "/jsm/loaders/GLTFLoader.js";
-import startSchoolRoom from "./school.js";
-import startOfficeRoom from "./office.js";
-import startStoreRoom from "./store.js";
-import startHomeRoom from "./home.js";
+import startSchoolRoom from "./roomScenes/school.js";
+import startOfficeRoom from "./roomScenes/office.js";
+import startStoreRoom from "./roomScenes/store.js";
+import startHomeRoom from "./roomScenes/home.js";
+import { VRButton } from "/jsm/webxr/VRButton.js";
 
 const officeTasks = 5;
 const schoolTasks = 3;
@@ -16,6 +17,7 @@ function startTown() {
   // --------------------------------------------------------------------------------
   // Initial scene setup and render to the HTML page
   // --------------------------------------------------------------------------------
+  
   const clock = new THREE.Clock();
 
   const scene = new THREE.Scene();
@@ -29,6 +31,8 @@ function startTown() {
   document.body.appendChild(renderer.domElement);
 
   const domEvents = new THREEx.DomEvents(camera, renderer.domElement);
+  document.body.appendChild( VRButton.createButton( renderer ) );
+  renderer.xr.enabled = true;
 
   // --------------------------------------------------------------------------------
   // Movement Controls
@@ -132,7 +136,7 @@ function startTown() {
   });
 
   // --------------------------------------------------------------------------------
-  // Creating clickable doors
+  // Clickable doors
   // --------------------------------------------------------------------------------
 
   // create the school door mesh
@@ -181,7 +185,7 @@ function startTown() {
   }, false);
 
   // --------------------------------------------------------------------------------
-  // Teleport
+  // Go to rooms when doors are clicked
   // --------------------------------------------------------------------------------
 
   domEvents.addEventListener(schoolMesh, "click", () => {
@@ -218,9 +222,8 @@ function startTown() {
   // --------------------------------------------------------------------------------
   // Render all the above code every time the screen refreshes (hopefully 60fps)
   // --------------------------------------------------------------------------------
-
+  
   const render = function () {
-    requestAnimationFrame(render);
     if (camera.position.x < -8) {
       camera.position.x = -8;
     } else if (camera.position.x > 15.5) {
@@ -234,8 +237,9 @@ function startTown() {
     renderer.render(scene, camera);
     stats.update();
   };
-
-  render();
+  
+  renderer.setAnimationLoop(render);
+  // render();
 }
 startTown();
 
