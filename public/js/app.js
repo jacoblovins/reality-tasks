@@ -43,6 +43,21 @@ function startTown() {
   controls.lookSpeed = 0.08;
   controls.lookVertical = false;
 
+
+  const mouseMaterial = new THREE.MeshBasicMaterial({ wireframe: false, transparent: true, opacity: 0 });
+  const mouseGeometry = new THREE.PlaneGeometry(1.2, 3, 1);
+  const mouseMesh = new THREE.Mesh(mouseGeometry, mouseMaterial);
+  scene.add(mouseMesh);
+
+  domEvents.addEventListener(mouseMesh, "mouseover", () => {
+    controls.activeLook = false;
+  }, false);
+
+  domEvents.addEventListener(mouseMesh, "mouseout", () => {
+    controls.activeLook = true;
+  }, false);
+  
+
   // --------------------------------------------------------------------------------
   // Load the GLTF Scene I created
   // --------------------------------------------------------------------------------
@@ -235,6 +250,10 @@ function startTown() {
     }
     controls.update(clock.getDelta());
     renderer.render(scene, camera);
+    mouseMesh.rotation.copy( camera.rotation );
+    mouseMesh.position.copy( camera.position );
+    mouseMesh.updateMatrix();
+    mouseMesh.translateZ( - 2 );
     stats.update();
   };
   
