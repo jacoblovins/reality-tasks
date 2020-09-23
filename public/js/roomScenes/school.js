@@ -48,6 +48,19 @@ function startSchoolRoom() {
   controls.lookSpeed = 0.08;
   controls.lookVertical = false;
 
+  const homeMaterial = new THREE.MeshBasicMaterial({ wireframe: false, transparent: true, opacity: 0 });
+  const homeGeometry = new THREE.PlaneGeometry(1.2, 3, 1);
+  const homeMesh = new THREE.Mesh(homeGeometry, homeMaterial);
+  townScene.add(homeMesh);
+
+  domEvents2.addEventListener(homeMesh, "mouseover", () => {
+    controls.activeLook = false;
+  }, false);
+
+  domEvents2.addEventListener(homeMesh, "mouseout", () => {
+    controls.activeLook = true;
+  }, false);
+
   // --------------------------------------------------------------------------------
   // Load the GLTF Scene I created
   // --------------------------------------------------------------------------------
@@ -84,14 +97,14 @@ function startSchoolRoom() {
   // Add invisible box at door and make it reload the page when clicked
   // --------------------------------------------------------------------------------
 
-  const homeMaterial = new THREE.MeshBasicMaterial({ wireframe: false });
-  const homeGeometry = new THREE.PlaneGeometry(1.2, 2.5, 1);
-  const homeMesh = new THREE.Mesh(homeGeometry, homeMaterial);
-  homeMesh.rotation.y = Math.PI / 2;
-  homeMesh.position.set(-6.1, 1.5, -8);
-  townScene.add(homeMesh);
+  const doorMaterial = new THREE.MeshBasicMaterial({ wireframe: false });
+  const doorGeometry = new THREE.PlaneGeometry(1.2, 2.5, 1);
+  const doorMesh = new THREE.Mesh(doorGeometry, doorMaterial);
+  doorMesh.rotation.y = Math.PI / 2;
+  doorMesh.position.set(-6.1, 1.5, -8);
+  townScene.add(doorMesh);
 
-  domEvents2.addEventListener(homeMesh, "click", () => {
+  domEvents2.addEventListener(doorMesh, "click", () => {
     console.log("you clicked on the mesh");
     document.location.reload(); 
   }, false);
@@ -128,6 +141,7 @@ function startSchoolRoom() {
   const domObject = new CSS3DObject(element);
   domObject.scale.set(.009, .009, .009);
   officeMesh.add(domObject);
+  
 
   // --------------------------------------------------------------------------------
   // Lock controls when focused on todo list
@@ -181,6 +195,10 @@ function startSchoolRoom() {
     controls.update( clock.getDelta() );
     renderer.render(townScene, camera);
     renderer2.render(townScene, camera);
+    homeMesh.rotation.copy( camera.rotation );
+    homeMesh.position.copy( camera.position );
+    homeMesh.updateMatrix();
+    homeMesh.translateZ( - 2 );
   }
 
 }

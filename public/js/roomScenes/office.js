@@ -44,6 +44,19 @@ function startOfficeRoom() {
   controls.movementSpeed = 5;
   controls.lookSpeed = 0.08;
   controls.lookVertical = false;
+
+  const homeMaterial = new THREE.MeshBasicMaterial({ wireframe: false, transparent: true, opacity: 0 });
+  const homeGeometry = new THREE.PlaneGeometry(1.2, 3, 1);
+  const homeMesh = new THREE.Mesh(homeGeometry, homeMaterial);
+  townScene.add(homeMesh);
+
+  domEvents2.addEventListener(homeMesh, "mouseover", () => {
+    controls.activeLook = false;
+  }, false);
+
+  domEvents2.addEventListener(homeMesh, "mouseout", () => {
+    controls.activeLook = true;
+  }, false);
   
   // --------------------------------------------------------------------------------
   // Load the GLTF Scene I created
@@ -81,14 +94,14 @@ function startOfficeRoom() {
   // Clickable exit door
   // --------------------------------------------------------------------------------
 
-  const homeMaterial = new THREE.MeshBasicMaterial({ wireframe: false });
-  const homeGeometry = new THREE.PlaneGeometry(1.8, 2.3, 1);
-  const homeMesh = new THREE.Mesh(homeGeometry, homeMaterial);
-  homeMesh.rotation.y = 90 * Math.PI / 90;
-  homeMesh.position.set(0, 1.1, 7.5);
-  townScene.add(homeMesh);
+  const doorMaterial = new THREE.MeshBasicMaterial({ wireframe: false });
+  const doorGeometry = new THREE.PlaneGeometry(1.8, 2.3, 1);
+  const doorMesh = new THREE.Mesh(doorGeometry, doorMaterial);
+  doorMesh.rotation.y = 90 * Math.PI / 90;
+  doorMesh.position.set(0, 1.1, 7.5);
+  townScene.add(doorMesh);
 
-  domEvents2.addEventListener(homeMesh, "click", () => {
+  domEvents2.addEventListener(doorMesh, "click", () => {
     console.log("you clicked on the mesh");
     document.location.reload(); 
   }, false);
@@ -174,6 +187,10 @@ function startOfficeRoom() {
     controls.update( clock.getDelta() );
     renderer.render(townScene, camera);
     renderer2.render(townScene, camera);
+    homeMesh.rotation.copy( camera.rotation );
+    homeMesh.position.copy( camera.position );
+    homeMesh.updateMatrix();
+    homeMesh.translateZ( - 2 );
   }
 
 }
