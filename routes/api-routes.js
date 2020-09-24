@@ -3,7 +3,6 @@ const db = require("../models");
 const passport = require("../config/passport");
 const isAuth = require("../config/middleware/isAuthenticated");
 // const user = require("../models/user");
-let MemberId;
 
 module.exports = function(app) {
   //   // Using the passport.authenticate middleware with our local strategy.
@@ -43,31 +42,33 @@ module.exports = function(app) {
 
   //   // Route for getting some data about our user to be used client side
   app.get("/api/user_data", isAuth, (req, res) => {
-    if (!req.members) {
+    if (!req.user) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
       // Otherwise send back the user's email and id
       // Sending back a password, even a hashed password, isn't a good idea
       res.json({
-        username: req.members.username,
-        id: req.members.id
+        username: req.user.username,
+        id: req.user.id
       });
     }
   });
 
-  app.get("/api/tasks", isAuth, (req, res) => {
+  app.get("/api/tasks/:place", isAuth, (req, res) => {
     // fetch todos from DB by req.user.id
     db.Task.findAll({
-      include: [{ model: db.Members }]
+      include: [{ model: db.Members }],
+      where: {
+        taskType: req.params.place,
+        MemberId: req.user.id
+      }
     }).then(dbTask => {
-      console.log(MemberId);
       res.json(dbTask);
     });
   });
 
   app.post("/api/tasks", async (req, res) => {
-    console.log(req.body);
     await db.Task.create(req.body).then(dbTask => {
       res.json(dbTask);
     });

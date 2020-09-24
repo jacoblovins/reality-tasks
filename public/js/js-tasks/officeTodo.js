@@ -1,4 +1,7 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable camelcase */
+
+// Creat form, input, and unordered list elements for the iframe
 const taskForm = $("<form>");
 taskForm.id = "taskForm";
 const taskInput = $("<input>");
@@ -6,12 +9,11 @@ taskInput.id = "taskInput";
 taskForm.append(taskInput);
 const blockRow = $("<ul>");
 taskForm.submit(handleFormSubmit);
+let MemberId;
 
-
-
+// Create a list of tasks to display
 function buildTable(tasks){
   blockRow.empty();
-  console.log(tasks);
   
   for (let i = 0; i < tasks.length; i++) {
     const todoText = $("<li class='todo col-md-9' id=" + tasks[i].id + ">" + tasks[i].task_name + "</li>");
@@ -19,62 +21,51 @@ function buildTable(tasks){
     blockRow.append(todoText, delBtn);
     delBtn.click(deleteTask);
   }
-  
   $(".container").append(taskForm, blockRow);
 }
 
-
+// AJAX get requests to get all tasks based on the user and building and write them to the iframe
 function getTodo() {
-  // const tasks = [];
-  $.get("/api/tasks").then((data) => { 
-    console.log(data);
-    // tasks.push(data);
+  $.get("/api/tasks/office").then((data) => { 
     buildTable(data);
+  });
+
+  $.get("/api/user_data").then((data) => { 
+    MemberId = data.id;
   });
 }
 
-function handleFormSubmit(event) {
-  // event.preventDefault();
-  console.log("submit");
-  // Wont submit the post if we are missing a body, title, or author
-  // Constructing a newPost object to hand to the database
+// Constructing a newTask object to hand to the database
+function handleFormSubmit() {
   const newTask = {
     task_name: taskInput.val(),
-    tasktype: "office"
+    taskType: "office",
+    MemberId: MemberId
   };
- 
   submitPost(newTask);
-  
 }
 
+// Post request when form is submitted
 function submitPost(task) {
-  console.log(task);
-  $.post("/api/tasks", task).then(getTodo());
+  $.post("/api/tasks", task).then(()=>{
+    getTodo();
+  });
 }
 
-
+// WHen delete button is clicked
 function deleteTask() {
-  console.log("delete");
   const currentTask = $(this).prev();
-  console.log(currentTask[0].id);
-  // If the text area is not empty confirm the user wants to delete the event
-  if ($(this).siblings(".todo").val() !== "") {
-    const ask = confirm("Are you sure you want to delete this event?");
+  // Confirm the user wants to delete the event
+  const ask = confirm("Are you sure you want to delete this event?");
 
-    if (ask) {
+  if (ask) {
+    $.ajax({
+      method: "DELETE",
+      url: "/api/tasks/" + currentTask[0].id
+    }).then(getTodo());
 
-      $.ajax({
-        method: "DELETE",
-        url: "/api/tasks/" + currentTask[0].id
-      }).then(getTodo());
-
-    } else {
-      return;
-    }
   } else {
     return;
   }
 }
-
-
 getTodo();
