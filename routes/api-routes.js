@@ -3,6 +3,7 @@ const db = require("../models");
 const passport = require("../config/passport");
 const isAuth = require("../config/middleware/isAuthenticated");
 // const user = require("../models/user");
+let MemberId;
 
 module.exports = function(app) {
   //   // Using the passport.authenticate middleware with our local strategy.
@@ -10,6 +11,7 @@ module.exports = function(app) {
   // Otherwise the user will be sent an error
   app.post("/api/login", passport.authenticate("local"), (req, res) => {
     // Sending back a password, even a hashed password, isn't a good idea
+
     res.json({
       username: req.body.username,
       id: req.body.id
@@ -40,7 +42,7 @@ module.exports = function(app) {
   });
 
   //   // Route for getting some data about our user to be used client side
-  app.get("/api/user_data", (req, res) => {
+  app.get("/api/user_data", isAuth, (req, res) => {
     if (!req.members) {
       // The user is not logged in, send back an empty object
       res.json({});
@@ -54,13 +56,30 @@ module.exports = function(app) {
     }
   });
 
-  app.get("/api/todo", isAuth, (req, res) => {
+  app.get("/api/tasks", isAuth, (req, res) => {
     // fetch todos from DB by req.user.id
-    res.json({});
+    db.Task.findAll({
+      include: [{ model: db.Members }]
+    }).then(dbTask => {
+      console.log(MemberId);
+      res.json(dbTask);
+    });
   });
 
-  app.post("/api/todo", isAuth, (req, res) => {
-    // Add code to create new Todo from request.body for req.user.id
-    res.sendStatus(200);
+  app.post("/api/tasks", async (req, res) => {
+    console.log(req.body);
+    await db.Task.create(req.body).then(dbTask => {
+      res.json(dbTask);
+    });
+  });
+
+  app.delete("/api/tasks/:id", (req, res) => {
+    db.Task.destroy({
+      where: {
+        id: req.params.id
+      }
+    }).then(dbTask => {
+      res.json(dbTask);
+    });
   });
 };
