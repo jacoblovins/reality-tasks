@@ -64,7 +64,7 @@ function startStoreRoom() {
 
   const loader = new GLTFLoader();
   loader.load(
-    "../img/storeRoom2.glb",
+    "../img/storeRoom.glb",
     (gltf) => {
     // called when the resource is loaded
       townScene.add(gltf.scene);

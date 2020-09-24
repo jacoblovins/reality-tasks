@@ -64,7 +64,7 @@ function startTown() {
 
   const loader = new GLTFLoader();
   loader.load(
-    "../img/shopTown2.glb",
+    "../img/town.glb",
     (gltf) => {
       // called when the resource is loaded
       scene.add(gltf.scene);
