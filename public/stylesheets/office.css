@@ -2,14 +2,8 @@ body {
     background-color: white;
     color: black;
   }
-  .btn {
-    width: 0%;
-    padding: 12px 28px;
-  }
-
+  
   li {
-    text-align: left;
-    width: 10%;
     float: left;
   }
 form {
@@ -19,6 +13,6 @@ form {
     margin-left: -80%;
     position: absolute; */
 }
-input {
+/* input {
     border-radius: 25px;
-}
+} */
