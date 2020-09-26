@@ -9,10 +9,6 @@ import startStoreRoom from "./roomScenes/store.js";
 import startHomeRoom from "./roomScenes/home.js";
 import { VRButton } from "/jsm/webxr/VRButton.js";
 
-const officeTasks = 5;
-const schoolTasks = 3;
-const storeTasks = 9;
-
 function startTown() {
   // --------------------------------------------------------------------------------
   // Initial scene setup and render to the HTML page
@@ -43,9 +39,8 @@ function startTown() {
   controls.lookSpeed = 0.08;
   controls.lookVertical = false;
 
-
   const mouseMaterial = new THREE.MeshBasicMaterial({ wireframe: false, transparent: true, opacity: 0 });
-  const mouseGeometry = new THREE.PlaneGeometry(1.2, 3, 1);
+  const mouseGeometry = new THREE.PlaneGeometry(2.2, 3.5, 1);
   const mouseMesh = new THREE.Mesh(mouseGeometry, mouseMaterial);
   scene.add(mouseMesh);
 
@@ -56,7 +51,7 @@ function startTown() {
   domEvents.addEventListener(mouseMesh, "mouseout", () => {
     controls.activeLook = true;
   }, false);
-  
+
 
   // --------------------------------------------------------------------------------
   // Load the GLTF Scene I created
@@ -99,10 +94,10 @@ function startTown() {
   fontLoader.load("../fonts/Roboto_Bold.json", (font) => {
 
     // Office
-    const officeText = new THREE.TextGeometry("OFFICE " + officeTasks, {
+    const officeText = new THREE.TextGeometry("OFFICE", {
       font: font,
       size: .5,
-      height: .5,
+      height: .1,
       curveSegments: 12,
     });
     const officeMesh = new THREE.Mesh(officeText, new THREE.MeshStandardMaterial({
@@ -111,12 +106,12 @@ function startTown() {
       roughness: 0.5,
       side: THREE.DoubleSide
     }));
-    officeMesh.position.set(15.15, 3.51, -25.5);
+    officeMesh.position.set(14.72, 3.51, -25.2);
     officeMesh.rotation.y = Math.PI / -2;
     scene.add(officeMesh);
 
     // School
-    const schoolText = new THREE.TextGeometry("SCHOOL " + schoolTasks, {
+    const schoolText = new THREE.TextGeometry("SCHOOL", {
       font: font,
       size: .39,
       height: .5,
@@ -128,12 +123,12 @@ function startTown() {
       roughness: 0.5,
       side: THREE.DoubleSide
     }));
-    schoolMesh.position.set(-9.8, 4.85, -1.2);
+    schoolMesh.position.set(-9.8, 4.85, -1.42);
     schoolMesh.rotation.y = Math.PI / 2;
     scene.add(schoolMesh);
 
     // Store
-    const storeText = new THREE.TextGeometry("STORE " + storeTasks, {
+    const storeText = new THREE.TextGeometry("STORE", {
       font: font,
       size: .42,
       height: .5,
@@ -145,9 +140,42 @@ function startTown() {
       roughness: 0.5,
       side: THREE.DoubleSide
     }));
-    storeMesh.position.set(-13, 5.38, -21);
+    storeMesh.position.set(-13, 5.375, -21.3);
     storeMesh.rotation.y = Math.PI / 2;
     scene.add(storeMesh);
+    
+    // RIP Kayla
+    const ripText = new THREE.TextGeometry("RIP", {
+      font: font,
+      size: .15,
+      height: .1,
+      curveSegments: 12,
+    });
+    const ripMesh = new THREE.Mesh(ripText, new THREE.MeshStandardMaterial({
+      color: "black",
+      metalness: 0.0,
+      roughness: 0.5,
+      side: THREE.DoubleSide
+    }));
+    ripMesh.position.set(-7.8, .8, 10.17);
+    ripMesh.rotation.y = Math.PI / 2;
+    scene.add(ripMesh);
+
+    const kaylaText = new THREE.TextGeometry("Kayla", {
+      font: font,
+      size: .15,
+      height: .1,
+      curveSegments: 12,
+    });
+    const kaylaMesh = new THREE.Mesh(kaylaText, new THREE.MeshStandardMaterial({
+      color: "black",
+      metalness: 0.0,
+      roughness: 0.5,
+      side: THREE.DoubleSide
+    }));
+    kaylaMesh.position.set(-7.8, .55, 10.25);
+    kaylaMesh.rotation.y = Math.PI / 2;
+    scene.add(kaylaMesh);
   });
 
   // --------------------------------------------------------------------------------
@@ -247,7 +275,10 @@ function startTown() {
       camera.position.z = 11;
     } else if (camera.position.z < -30) {
       camera.position.z = -30;
+    } else if (camera.position.y < 2 || camera.position.y > 2) {
+      camera.position.y = 2;
     }
+
     controls.update(clock.getDelta());
     renderer.render(scene, camera);
     mouseMesh.rotation.copy( camera.rotation );

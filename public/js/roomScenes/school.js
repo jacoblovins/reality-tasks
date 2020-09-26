@@ -49,7 +49,7 @@ function startSchoolRoom() {
   controls.lookVertical = false;
 
   const homeMaterial = new THREE.MeshBasicMaterial({ wireframe: false, transparent: true, opacity: 0 });
-  const homeGeometry = new THREE.PlaneGeometry(1.2, 3, 1);
+  const homeGeometry = new THREE.PlaneGeometry(2.2, 3.5, 1);
   const homeMesh = new THREE.Mesh(homeGeometry, homeMaterial);
   townScene.add(homeMesh);
 
@@ -184,6 +184,8 @@ function startSchoolRoom() {
       camera.position.z = -7;
     }else if(camera.position.z < -11.7){
       camera.position.z = -11.7;
+    } else if (camera.position.y < 2 || camera.position.y > 2) {
+      camera.position.y = 2;
     }
     render();
   };
