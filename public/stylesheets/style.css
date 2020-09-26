@@ -6,16 +6,22 @@ form.login {
 h2 {
   text-align: center;
 }
+
 body {
-  background-image: url("../img/loginpage2.png");
+  
+  background-image: url("../img/login3.png");
   background-color: #cccccc;
-  /*background-repeat: no-repeat;*/
-  /*background-size: 202px;*/
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+
 }
+
 .container {
   background-color: lightgrey;
   width: 200vw;
-  height: 60vh;
+  height: AUTO;
   justify-content: center;
   align-items: center;
   max-width: 60rem;
@@ -28,6 +34,7 @@ body {
 input, label {
   color: black;
   font-weight: bold;
+  height: auto;
 }
 
 h1 {
@@ -37,12 +44,16 @@ h1 {
   height: 8vh;
   justify-content: center;
   align-items: center;
-  /* max-width: 60rem; */
   margin: 0 auto;
   border-style: solid;
-  /* border-radius: 15px; */
   box-shadow: 0px 2px 12px 0px;
   margin-bottom: 40px;
   font-weight: 1000;
 }
+
+p{
+  text-align: center;
+}
+
+
 
