@@ -16,8 +16,8 @@ function buildTable(tasks){
   blockRow.empty();
   
   for (let i = 0; i < tasks.length; i++) {
-    const todoText = $("<li class='todo col-md-9' id=" + tasks[i].id + ">" + tasks[i].task_name + "</li>");
-    const delBtn = $("<button class='col-md-1 btn delBtn d-flex justify-content-center align-items-center'><i class='fas fa-trash-alt'></i></button>");
+    const todoText = $("<li class='todo' id=" + tasks[i].id + ">" + tasks[i].task_name + "</li>");
+    const delBtn = $("<button class='btn delBtn d-flex justify-content-center align-items-center'><i class='fas fa-trash-alt'></i></button>");
     blockRow.append(todoText, delBtn);
     delBtn.click(deleteTask);
   }
