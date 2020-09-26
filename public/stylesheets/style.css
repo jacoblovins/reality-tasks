@@ -3,7 +3,7 @@ form.login {
   margin-top: 50px;
 }
 body {
-  background-image: url("/img/background.png");
+  background-image: url("../img/loginpage2.png");
   background-color: #cccccc;
   /*background-repeat: no-repeat;*/
   /*background-size: 202px;*/
