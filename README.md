@@ -5,8 +5,6 @@ Reality Tasks
 
 ![VR](./public/img/school.png)
 
-![VR](./public/img/home.png)
-
 ​
 # Table of Contents
   - [Concept](#Concept)
