@@ -1,24 +1,17 @@
-body {
+ body {
     background-color: #346b31;
     color: rgb(201, 209, 216);
-  }
-  .btn {
-    width: 10%;
-    padding: 0px 0px;
-  }
-
-  li {
-    text-align: center;
-    width: 50%;
-    float: left;
-  }
+  } 
+li {
+  float: left;
+}
 form {
-    text-align: center; 
-    margin-bottom: 20px;
-    left: 50%;
-    margin-left: -80%;
-    position: absolute;
+  text-align: center; 
+  margin-bottom: 20px;
+  /* left: 50%;
+  margin-left: -80%;
+  position: absolute; */
 }
-input {
-    border-radius: 25px;
-}
+/* input {
+  border-radius: 25px;
+} */

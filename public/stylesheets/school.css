@@ -2,17 +2,7 @@ body {
     background-color: #346b31;
     color: rgb(201, 209, 216);
   }
-  .btn {
-    /* width: 0%; */
-    /* padding: 0; */
-    padding-left: 15px;
-    padding-top: 4px;
-  }
-
   li {
-    /* text-align: left; */
-    /* width: 15px; */
-    font-size: 18px;
     float: left;
   }
 form {
@@ -22,7 +12,7 @@ form {
     margin-left: -80%;
     position: absolute; */
 }
-input {
+/* input {
     border-radius: 25px;
-}
+} */
 

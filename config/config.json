@@ -1,7 +1,11 @@
 {
   "development": {
     "username": "root",
+<<<<<<< HEAD
     "password": "Dbabzb08",
+=======
+    "password": "codeme10",
+>>>>>>> 09bf540209c8edff938813356f7520d52cc89d11
     "database": "vrtasklist_db",
     "host": "127.0.0.1",
     "dialect": "mysql"
