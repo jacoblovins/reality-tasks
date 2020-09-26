@@ -17,7 +17,7 @@ function buildTable(tasks){
   
   for (let i = 0; i < tasks.length; i++) {
     const delBtn = $("<button class='col-4 btn delBtn'><i class='fas fa-trash-alt'></i></button>");
-    const todoText = $("<li class='col-8 todo'" + tasks[i].id + ">" + tasks[i].task_name + "</li>");
+    const todoText = $("<li class='col-8 todo' id=" + tasks[i].id + ">" + tasks[i].task_name + "</li>");
     blockRow.append(todoText, delBtn);
     delBtn.click(deleteTask);
   }

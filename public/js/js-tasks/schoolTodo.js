@@ -59,6 +59,7 @@ function deleteTask() {
   const ask = confirm("Are you sure you want to delete this event?");
 
   if (ask) {
+    console.log(currentTask)
     $.ajax({
       method: "DELETE",
       url: "/api/tasks/" + currentTask[0].id
