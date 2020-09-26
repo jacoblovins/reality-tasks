@@ -9,15 +9,20 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
   <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/schoolStyle.css" />
-  <title>Office Task List</title>
+  <link rel="stylesheet" href="../stylesheets/todo.css" />
+  <title>Office Task Lists</title>
 </head>
 
 <body>
-  
-
-  <div class="container"></div>
-  
+  <div class="container">
+    <div class="todos">
+      <form id="todo-form" method="POST">
+        <label for="todo-text" class="Add">Add a Task:</label>
+        <input type="text" placeholder="What needs to be done?" name="todo-text" id="todo-text" />
+      </form>
+      <p>Todo Count: <span id="todo-count">0</span></p>
+      <ul id="todo-list"></ul>
+    </div>
   <!-- javascript -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
