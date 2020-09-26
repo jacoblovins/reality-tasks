@@ -163,8 +163,8 @@ function startHomeRoom() {
   // Frame Rate (remove this later)
   // --------------------------------------------------------------------------------
 
-  const stats = Stats();
-  document.body.appendChild(stats.dom);
+  // const stats = Stats();
+  // document.body.appendChild(stats.dom);
 
   // --------------------------------------------------------------------------------
   // Render all the above code every time the screen refreshes (hopefully 60fps)
@@ -184,7 +184,7 @@ function startHomeRoom() {
       camera.position.y = 1.7;
     }
     render();
-    stats.update();
+    // stats.update();
   };
 
   renderer.setAnimationLoop(animate);
