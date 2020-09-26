@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "Dbabzb08",
+    "password": "docker123",
     "database": "vrtasklist_db",
     "host": "127.0.0.1",
     "dialect": "mysql"
