@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import * as THREE from "/build/three.module.js";
 import { FirstPersonControls } from "/jsm/controls/FirstPersonControls.js";
-import Stats from "/jsm/libs/stats.module.js";
+// import Stats from "/jsm/libs/stats.module.js";
 import { GLTFLoader } from "/jsm/loaders/GLTFLoader.js";
 import startSchoolRoom from "./roomScenes/school.js";
 import startOfficeRoom from "./roomScenes/office.js";
@@ -259,8 +259,8 @@ function startTown() {
   // Frame Rate (remove this later)
   // --------------------------------------------------------------------------------
 
-  const stats = Stats();
-  document.body.appendChild(stats.dom);
+  // const stats = Stats();
+  // document.body.appendChild(stats.dom);
 
   // --------------------------------------------------------------------------------
   // Render all the above code every time the screen refreshes (hopefully 60fps)
@@ -285,7 +285,7 @@ function startTown() {
     mouseMesh.position.copy( camera.position );
     mouseMesh.updateMatrix();
     mouseMesh.translateZ( - 2 );
-    stats.update();
+    // stats.update();
   };
   
   renderer.setAnimationLoop(render);

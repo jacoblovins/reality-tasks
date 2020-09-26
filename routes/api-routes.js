@@ -66,6 +66,7 @@ module.exports = function(app) {
   });
 
   app.delete("/api/tasks/:id", (req, res) => {
+    console.log(req.params.id);
     db.Task.destroy({
       where: {
         id: req.params.id
